@@ -102,6 +102,46 @@ int main(){
                     integers[loc]=a+b;
                 }
             }
+            //Sub
+            for (int i = 0; i <= line.length(); i++) {
+                if (line[i] == '/' && line[i+1] == '/') {i=line.length();}
+                if (line[i] == 's' && line[i+1] == 'u' && line[i+2] == 'b' && line[i+3] == ' ') {
+                    int a,b;
+                    string temp;
+                    int lenloc;
+                    for (lenloc = 4; line[i+lenloc] != ','; lenloc++) {
+                        temp += line[i+lenloc];
+                    }
+                    loc = stoi(temp);
+                    temp = "";
+                    if (line[i+lenloc+1] == '$'){
+                        for (lenloc+=2; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        a = integers[stoi(temp)];
+                    }
+                    else {
+                        for (lenloc++; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        a = stoi(temp);
+                    }
+                    temp = "";
+                    if (line[i+lenloc+1] == '$') {
+                        for (lenloc+=2; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        b = integers[stoi(temp)];
+                    }
+                    else {
+                        for (lenloc++; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        b = stoi(temp);
+                    }
+                    integers[loc]=a-b;
+                }
+            }
             //pl
             for (int i = 0; i <= line.length(); i++) {
                 if (line[i] == '/' && line[i+1] == '/') {i=line.length();}

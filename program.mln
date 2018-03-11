@@ -1,10 +1,12 @@
 alloc 30,
 //Comments work like this, they must be added after alloc though.
 
-int 0,10,
+int 0,10, //Defining integers
 int 1,20,
 
-add 2,5,$1,
+add 2,5,$1, //Addition example
 add 3,$2,5,
+sub 4,5,$1, //Subtraction example
 
-pl $3,
+pl $3, //Print line example
+pl $4,
