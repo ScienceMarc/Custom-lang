@@ -8,7 +8,7 @@ int main(){
     string filename;
     getline(cin, filename);
     ifstream file;
-    filename += ".lang";
+    filename += ".mln";
     file.open(filename);
 
     string line;
@@ -19,8 +19,9 @@ int main(){
 
     if (file.is_open()){
         while (getline(file, line)){
+            //Alloc
             for (int i = 0; i <= line.length(); i++) {
-                if (line[i] == 'a' && line[i+1] == 'l' && line[i+2] == 'l' && line[i+3] == 'o' && line[i+4] == 'c') {
+                if (line[i] == 'a' && line[i+1] == 'l' && line[i+2] == 'l' && line[i+3] == 'o' && line[i+4] == 'c' && line[i+5] == ' ') {
                     string temp;
                     for (int lenloc = 6; line[i+lenloc] != ','; lenloc++) {
                         temp += line[i+lenloc];
@@ -34,9 +35,9 @@ int main(){
                 integers = new int[alloc];
                 allocb = true;
             }
-            //Ints
+            //Int
             for (int i = 0; i <= line.length(); i++) {
-                if (line[i] == 'i' && line[i+1] == 'n' && line[i+2] == 't') {
+                if (line[i] == 'i' && line[i+1] == 'n' && line[i+2] == 't' && line[i+3] == ' ') {
                     string temp;
                     int lenloc;
                     for (lenloc = 4; line[i+lenloc] != ','; lenloc++) {
@@ -59,9 +60,58 @@ int main(){
                     }
                 }
             }
+            //Add
+            for (int i = 0; i <= line.length(); i++) {
+                if (line[i] == 'a' && line[i+1] == 'd' && line[i+2] == 'd' && line[i+3] == ' ') {
+                    int a,b;
+                    string temp;
+                    int lenloc;
+                    for (lenloc = 4; line[i+lenloc] != ','; lenloc++) {
+                        temp += line[i+lenloc];
+                    }
+                    loc = stoi(temp);
+                    temp = "";
+                    if (line[i+lenloc+1] == '$'){
+                        for (lenloc+=2; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        a = integers[stoi(temp)];
+                    }
+                    else {
+                        for (lenloc++; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        a = stoi(temp);
+                    }
+                    temp = "";
+                    if (line[i+lenloc+1] == '$') {
+                        for (lenloc+=2; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        b = integers[stoi(temp)];
+                    }
+                    else {
+                        for (lenloc++; line[i+lenloc] != ','; lenloc++){
+                            temp += line[i+lenloc];
+                        }
+                        b = stoi(temp);
+                    }
+                    integers[loc]=a+b;
+                }
+            }
+            //pl
+            for (int i = 0; i <= line.length(); i++) {
+                if (line[i] == 'p' && line[i+1] == 'l' && line[i+2] == ' ') {
+                    string temp;
+                    int lenloc;
+                    for (lenloc = 4; line[i+lenloc] != ','; lenloc++) {
+                        temp += line[i+lenloc];
+                    }
+                    cout << integers[stoi(temp)] << endl;
+                }
+            }
         }
     }
-    cout << integers[30];
     cin.get();
     return 0;
 }
