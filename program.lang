@@ -1,4 +1,4 @@
-alloc 0,
+alloc 30,
 int 12,10,
 int 13,$12,
 int 29,58,
