@@ -21,6 +21,7 @@ int main(){
         while (getline(file, line)){
             //Alloc
             for (int i = 0; i <= line.length(); i++) {
+                if (line[i] == '/' && line[i+1] == '/') {i=line.length();}
                 if (line[i] == 'a' && line[i+1] == 'l' && line[i+2] == 'l' && line[i+3] == 'o' && line[i+4] == 'c' && line[i+5] == ' ') {
                     string temp;
                     for (int lenloc = 6; line[i+lenloc] != ','; lenloc++) {
@@ -37,6 +38,7 @@ int main(){
             }
             //Int
             for (int i = 0; i <= line.length(); i++) {
+                if (line[i] == '/' && line[i+1] == '/') {i=line.length();}
                 if (line[i] == 'i' && line[i+1] == 'n' && line[i+2] == 't' && line[i+3] == ' ') {
                     string temp;
                     int lenloc;
@@ -62,6 +64,7 @@ int main(){
             }
             //Add
             for (int i = 0; i <= line.length(); i++) {
+                if (line[i] == '/' && line[i+1] == '/') {i=line.length();}
                 if (line[i] == 'a' && line[i+1] == 'd' && line[i+2] == 'd' && line[i+3] == ' ') {
                     int a,b;
                     string temp;
@@ -101,6 +104,7 @@ int main(){
             }
             //pl
             for (int i = 0; i <= line.length(); i++) {
+                if (line[i] == '/' && line[i+1] == '/') {i=line.length();}
                 if (line[i] == 'p' && line[i+1] == 'l' && line[i+2] == ' ') {
                     string temp;
                     int lenloc;

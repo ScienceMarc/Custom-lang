@@ -1,4 +1,5 @@
 alloc 30,
+//Comments work like this, they must be added after alloc though.
 
 int 0,10,
 int 1,20,

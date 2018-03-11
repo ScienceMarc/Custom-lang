@@ -1,4 +1,4 @@
-# Custom-lang
+# M-lang
 This is a little project I've been working on to see if I could make a functioning interpreted programming language.
 
 # Syntax
@@ -12,6 +12,8 @@ Space sensitive.
 alloc [amount to allocate],
 
 example: alloc 12,
+
+Warning: Alloc must be done on the very first line!
 
 ## Int
 int [address],[value/reference],
