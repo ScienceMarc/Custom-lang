@@ -1,14 +1,20 @@
-//This is example code demonstrating a simple multiplication algorithm
+//This program performs the babylonian square root algorithm
+num s = 4 //Number you wish to square root
+num lastX = 1
+num x = 1
+num temp = 0
 
-//Declairing 2 variables as numbers. Setting them as 0. Just doing 'num x' would set the variable to zero but I wanted it to be clearer
-num x = 0
-num y = 0
+lastX = x
+temp = s / x
+temp = temp + x
+temp = temp / 2
+x = temp
 
-x = x + 5 //Add 5 to x
-y = y + 1 //Increment y by 1
-
-jump(13,y == 200) //This line only executes if y == 200, it jumps to line 11 if it is
-jump(7) //If the jump before this did not occur jump back to line 5
-
-print("5 times 5 equals")
-print(x) //Print the final value for x
+print(x)
+jump(16,lastX==x)
+jump(7)
+print("")
+print("The square root of")
+print(s)
+print("is")
+print(x)
