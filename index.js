@@ -1,14 +1,20 @@
 const fs = require("fs");
 const colors = require("colors");
 
-
 let start = process.hrtime();
 
-let code = fs.readFileSync("code.mls") //Load's code 
-//TODO: make this read files not named "code"
+let code;
 
-code = code.toString().replace(/\s*\/\/.*/g, "") //Removes comments
-code = code.split(/(?:\r\n|\r|\n)/g); //Splits code by line
+function loadCode() {
+    code = fs.readFileSync("code.mls") //Load's code 
+    //TODO: make this read files not named "code"
+
+    code = code.toString().replace(/\s*\/\/.*/g, "") //Removes comments
+    code = code.split(/(?:\r\n|\r|\n)/g); //Splits code by line
+
+}
+
+loadCode()
 
 console.log("[====Executing====]".blue.inverse)
 for (let i in code) {
@@ -22,10 +28,6 @@ let vars = []
 let coreFunctions = [{ name: "print", func: "print" }, { name: "jump", func: "jump" }] //List of built in functions
 
 for (let line = 0; line < code.length; line++) {
-    let code = fs.readFileSync("code.mls")
-
-    code = code.toString().replace(/\s*\/\/.*/g, "")
-    code = code.split(/(?:\r\n|\r|\n)/g);
 
     if (/([a-zA-Z]+\s*(\+|-|\*|\/)\s*-*\d+(\.\d+)*)|(-*\d+(\.\d+)*\s*(\+|-)\s*[a-zA-Z]+)/.exec(code[line])) { //Substitute to do addition/subtraction/multiplication/division
         let string = /([a-zA-Z]+\s*(\+|-|\*|\/)\s*-*\d+(\.\d+)*)|(-*\d+(\.\d+)*\s*(\+|-)\s*[a-zA-Z]+)/.exec(code[line])[0];
@@ -54,7 +56,7 @@ for (let line = 0; line < code.length; line++) {
         let string = /[a-zA-Z]+\s*(\+|-|\*|\/)\s*[a-zA-Z]+/.exec(code[line])[0];
         let a = /^[a-zA-Z]+/.exec(string)[0];
         let b = /[a-zA-Z]+$/.exec(string)[0];
-        
+
         for (let i in vars) {
             if (vars[i]["name"] == a) {
                 a = vars[i]["value"].toString();
@@ -63,10 +65,10 @@ for (let line = 0; line < code.length; line++) {
                 b = vars[i]["value"].toString();
             }
         }
-        
-        string = string.replace(/^[a-zA-Z]+/,a);
-        string = string.replace(/[a-zA-Z]+$/,b);
-        code[line] = code[line].replace(/[a-zA-Z]+\s*(\+|-|\*|\/)\s*[a-zA-Z]+/,string);
+
+        string = string.replace(/^[a-zA-Z]+/, a);
+        string = string.replace(/[a-zA-Z]+$/, b);
+        code[line] = code[line].replace(/[a-zA-Z]+\s*(\+|-|\*|\/)\s*[a-zA-Z]+/, string);
     }
     if (/-*\d+(\.\d+)*(\s*\+\s*-*\d+(\.\d+)*)+/.exec(code[line])) { //Detects addition
         let string = /-*\d+(\.\d+)*(\s*\+\s*-*\d+(\.\d+)*)+/.exec(code[line])[0]
@@ -124,7 +126,7 @@ for (let line = 0; line < code.length; line++) {
             variable.type = "string";
         }
         else {
-            console.log("ERROR: UNSUPPORTED TYPE ON LINE " + (line + 1)); //TODO: Implement better error handling
+            console.log(colors.red("ERROR: UNSUPPORTED TYPE ON LINE " + (line + 1))); //TODO: Implement better error handling
             console.log("> " + code[line])
             break;
         }
@@ -132,11 +134,11 @@ for (let line = 0; line < code.length; line++) {
         for (let i in vars) {
             if (vars[i]["name"] == variable.name) {
                 if (vars[i]["type"] == variable.type) {
-                    console.log("error, variable already defined on line:" + (line + 1))
+                    console.log(colors.red("ERROR: VARIABLE ALREADY DEFINED (" + (line + 1) + ")"))
                     while (true);
                 }
                 else {
-                    console.log("ERROR: VARIABLE ALREADY ASIGNED TO ANOTHER TYPE: Tried to assign " + variable.type + "to " + vars[i]["type"])
+                    console.log(colors.red("ERROR: VARIABLE ALREADY ASIGNED TO ANOTHER TYPE: Tried to assign " + variable.type + "to " + vars[i]["type"]))
                 }
             }
         }
@@ -170,14 +172,14 @@ for (let line = 0; line < code.length; line++) {
                         console.log(/".*"/.exec(code[line])[0].substr(1, /".*"/.exec(code[line])[0].length - 2).yellow)
                     }
                     else if (/\(-*\d+(\.\d+)*\)/.exec(code[line])) {
-                        console.log(/\(-*\d+(\.\d+)*\)/.exec(code[line])[0].substr(1, /\(-*\d+(\.\d+)*\)/.exec(code[line])[0].length - 2))
+                        console.log(/\(-*\d+(\.\d+)*\)/.exec(code[line])[0].substr(1, /\(-*\d+(\.\d+)*\)/.exec(code[line])[0].length - 2).yellow)
                     }
                     break;
                 }
                 if (coreFunctions[i]["func"] == "jump") {
                     if (/\(\d+\)/.exec(code[line])) {
-                        //console.log(/\(\d+(\.\d+)*\)/.exec(code[line])[0].substr(1,/\(\d+(\.\d+)*\)/.exec(code[line])[0].length - 2))
                         line = parseInt(/\(\d+\)/.exec(code[line])[0].substr(1, /\(\d+\)/.exec(code[line])[0].length - 2)) - 2
+                        loadCode();
                         continue;
                     }
                     else if (/,[^\)]*/.exec(code[line])) {
@@ -199,10 +201,9 @@ for (let line = 0; line < code.length; line++) {
                                 }
                             }
                         }
-                        if (/==/.exec(condition)) { //Equality
-
-
+                        if (/==/.exec(condition)) { //Equality check
                             if (parseFloat(a) === parseFloat(b)) {
+                                loadCode();
                                 line = parseInt(/\(\d+/.exec(code[line])[0].substr(1)) - 2
                                 continue;
                             }
